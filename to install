@@ -1,0 +1,97 @@
+1. Setare ip static rpi
+  #interface eth0
+  interface wlan0
+  static ip_address=192.168.1.1/2
+  static routers=192.168.1.1
+  static domain_name_servers=192.168.1.1
+
+2. Startup teamviewer
+  -sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+  -adăugare @teamviewer în fișier
+
+3. Update firmware
+  -sudo apt install rpi-update
+  -http://comfilewiki.co.kr/en/doku.php?id=comfilepi:updating_the_raspberry_pi_firmware
+
+4. Clock cpu si gpu
+  -sudo nano /boot/config.txt
+    #Overclock
+    arm_freq=2000
+    gpu_freq=750
+    over_voltage=6
+    force_turbo=1
+  -https://www.tomshardware.com/how-to/raspberry-pi-4-23-ghz-overclock
+
+
+5. firewal
+  -sudo apt-get install ufw
+  -sudo ufw enable
+  -sudo ufw allow [port number/service name]
+  -sudo ufw deny [port number/service name]
+
+6. Sistem monitorizare
+  -Actualizați lista de pachete: sudo apt update
+
+  -Instalați Fail2ban: sudo apt install fail2ban
+
+  -Copiați fișierul de configurare implicit: sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+
+  -Deschideți fișierul de configurare cu editorul de text preferat: sudo nano /etc/fail2ban/jail.local
+
+  -Configurați parametrii pentru serviciul dorit (ex: FTP), cum ar fi limita de încercări greșite și perioada de blocare.
+
+  -Salvați fișierul și restartați serviciul Fail2ban: sudo systemctl restart fail2ban
+
+  Cod pentru ftp in sudo nano /etc/fail2ban/jail.local:
+      [ftp]
+      enabled = true
+      port    = ftp,ftp-data,ftps,ftps-data
+      filter  = vsftpd
+      logpath = /var/log/vsftpd.log
+      maxretry = 3
+      findtime = 300
+      bantime = 86400
+
+      [ssh]
+      enabled = true
+      port = 22
+      filter = sshd
+      logpath = /var/log/auth.log
+      maxretry = 3
+      bantime = 86400
+      
+      Blocare totala pentru 24 de ore:
+        [sshd]
+
+        enabled = true
+        port = 22
+        filter = sshd
+        logpath = /var/log/auth.log
+        maxretry = 3
+        findtime = 180
+        bantime = 86400
+
+        [vsftpd]
+
+        enabled = true
+        port = 21
+        filter = vsftpd
+        logpath = /var/log/vsftpd.log
+        maxretry = 3
+        findtime = 180
+        bantime = 86400
+
+
+7. Java
+    sudo apt update
+    sudo apt install 
+
+    sudo apt update
+    sudo apt install openjdk-8-jdk
+    
+    Change java version default: sudo update-alternatives --config java
+
+    Add path: 
+    1. sudo nano /etc/environment
+    2. JAVA_HOME="path_of_your_default_version_of_java"
+    https://phoenixnap.com/kb/install-java-raspberry-pi
