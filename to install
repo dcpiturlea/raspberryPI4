@@ -95,3 +95,5 @@
     1. sudo nano /etc/environment
     2. JAVA_HOME="path_of_your_default_version_of_java"
     https://phoenixnap.com/kb/install-java-raspberry-pi
+
+  8. pentru fortare wlan atunci cand scriptul py pentru conectare automata wifi nu merge: sudo ip link set wlan0 down
