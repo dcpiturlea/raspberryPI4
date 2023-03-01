@@ -92,7 +92,7 @@ def internet(host="8.8.8.8", port=53, timeout=3):
         return False
 
 
-def server(host="192.168.1.120", port=8080, timeout=3):
+def server(host="192.168.1.100", port=8080, timeout=3):
     try:
         socket.setdefaulttimeout(timeout)
         socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
